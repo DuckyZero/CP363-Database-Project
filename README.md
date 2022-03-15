@@ -5,7 +5,8 @@ Student Record Database Management System. The database  would  contain  general
 
 ## Technologies
 * MySQL
-* DOM Compand Prompt
+* DOM Compand Prompt 
+* Lucidchart (diagram design)
 * Notepad++
 
 ## Entity-Relationship Diagram
