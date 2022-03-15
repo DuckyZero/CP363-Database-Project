@@ -1,0 +1,94 @@
+mysql -u root -p
+
+CREATE DATABASE student_database;
+
+USE student_database;
+
+CREATE TABLE Student (
+
+    student_id INT NOT NULL,
+    first_name VARCHAR(35) NOT NULL,
+    last_name VARCHAR(35) NOT NULL,
+    student_email VARCHAR(255) NOT NULL,
+    phone_no VARCHAR(20) NOT NULL,
+    dob DATE NOT NULL,
+    gender VARCHAR(35) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    international BOOLEAN NOT NULL,
+    
+    PRIMARY KEY(student_id)
+    
+);
+
+CREATE TABLE Program (
+	
+	program_id INT NOT NULL,
+	student_id INT NOT NULL,
+	admission_year DATE NOT NULL,
+	major_name VARCHAR(20) NOT NULL,
+	minor_name VARCHAR(20) NOT NULL,
+	option_name VARCHAR(20) NOT NULL,
+	coop BOOLEAN NOT NULL,
+	total_credits DECIMAL(4,2) NOT NULL,
+	gpa DECIMAL(4,2) NOT NULL,
+	CHECK(gpa >= 0 AND gpa <= 12),
+	
+	PRIMARY KEY(program_id),
+	FOREIGN KEY(student_id) REFERENCES Student(student_id)
+	
+);
+
+CREATE TABLE Financial (
+
+	financial_id INT NOT NULL,
+	student_id INT NOT NULL,
+	tuition_amount DECIMAL(10,2) NOT NULL,
+	inter_tuition_amount DECIMAL(10,2) NOT NULL,
+	scholarship_amount DECIMAL(10,2) NOT NULL,
+    	osap_amount DECIMAL(10,2) NOT NULL,
+	monthly_income DECIMAL(10,2) NOT NULL,
+	monthly_expenses DECIMAL(10,2) NOT NULL,
+	
+	PRIMARY KEY(financial_id),
+	FOREIGN KEY(student_id) REFERENCES Student(student_id)
+
+);
+
+
+CREATE TABLE CurrentCourse (
+    
+    current_course_id INT NOT NULL,
+    student_id INT NOT NULL,
+    course_name VARCHAR(50) NOT NULL,
+    course_desc VARCHAR(255) NOT NULL,
+    course_cost DECIMAL(10,2) NOT NULL,
+    CHECK (course_cost > 0),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    professor VARCHAR(20) NOT NULL,
+    
+    PRIMARY KEY(current_course_id),
+    FOREIGN KEY(student_id) REFERENCES Student(student_id)
+
+);
+
+CREATE TABLE CompletedCourse (
+
+    completed_course_id INT NOT NULL,
+    student_id INT NOT NULL,
+    course_name VARCHAR(50) NOT NULL,
+    course_desc VARCHAR(255) NOT NULL,
+    course_cost DECIMAL(10,2) NOT NULL,
+    course_level INT NOT NULL,
+    CHECK (course_level <= 4),
+    final_grade DECIMAL(4,2) NOT NULL,
+    CHECK (final_grade >= 0 AND final_grade <= 12),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    professor VARCHAR(20) NOT NULL,
+    
+    
+    PRIMARY KEY(completed_course_id),
+    FOREIGN KEY(student_id) REFERENCES Student(student_id)
+
+);
